@@ -17,3 +17,16 @@ services:
         container_name: pypy-rest
         ports: 
             - 3001:8080
+
+    client:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        image: benchmark:client
+        container_name: client
+        environment: 
+            COUNT: 50
+            HOSTS: "python-rest:8080,pypy-rest:8080"
+        depends_on: 
+            - python-rest
+            - pypy-rest

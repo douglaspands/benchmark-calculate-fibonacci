@@ -31,7 +31,7 @@ def main():
         total = time() - start
         results.append({"host": host, "total": total})
     logger.info("Benchmark finished!")
-    logger.info("Report:")
+    logger.info(f"Report (Count {COUNT}):")
     for res in sorted(results, key=lambda r: r["total"]):
         logger.info("- {} finished at {:.3f}s (avg: {:.3f}s)".format(res["host"], res["total"], res["total"] / COUNT))
 

@@ -1,0 +1,19 @@
+version: "3"
+services: 
+    python-rest:
+        build:
+            context: ./python-rest
+            dockerfile: Dockerfile
+        image: benchmark:python-rest
+        container_name: python-rest
+        ports: 
+            - 3000:8080
+
+    pypy-rest:
+        build:
+            context: ./pypy-rest
+            dockerfile: Dockerfile
+        image: benchmark:pypy-rest
+        container_name: pypy-rest
+        ports: 
+            - 3001:8080

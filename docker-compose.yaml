@@ -7,7 +7,7 @@ services:
         image: benchmark:python-rest
         container_name: python-rest
         ports: 
-            - 3000:8080
+            - 3001:8080
 
     pypy-rest:
         build:
@@ -16,7 +16,25 @@ services:
         image: benchmark:pypy-rest
         container_name: pypy-rest
         ports: 
-            - 3001:8080
+            - 3002:8080
+
+    node-rest:
+        build:
+            context: ./node-rest
+            dockerfile: Dockerfile
+        image: benchmark:node-rest
+        container_name: node-rest
+        ports: 
+            - 3003:3000
+
+    # deno-rest:
+    #     build:
+    #         context: ./deno-rest
+    #         dockerfile: Dockerfile
+    #     image: benchmark:deno-rest
+    #     container_name: deno-rest
+    #     ports: 
+    #         - 3004:8000
 
     client:
         build:
@@ -26,8 +44,9 @@ services:
         container_name: client
         environment:
             LOG_LEVEL: "INFO"
-            COUNT: 100
-            HOSTS: "python-rest:8080,pypy-rest:8080"
+            COUNT: 10
+            HOSTS: "python-rest:8080,pypy-rest:8080,node-rest:3000"
         depends_on: 
             - python-rest
             - pypy-rest
+            - node-rest

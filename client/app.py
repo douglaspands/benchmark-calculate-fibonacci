@@ -6,7 +6,7 @@ from decouple import config
 
 LOG_LEVEL = config("LOG_LEVEL", default="INFO", cast=str).upper()
 COUNT = config("COUNT", default=1, cast=int)
-HOSTS = config("HOSTS", default="", cast=str).split(",")
+HOSTS = config("HOSTS", default="", cast=str)
 
 logging.basicConfig(level=LOG_LEVEL)
 logger = logging.getLogger("client")
@@ -25,14 +25,15 @@ def main():
     sleep(10)
     logger.info("Benchmark started...")
     results = []
-    for host in HOSTS:
+    for host in HOSTS.split(","):
         start = time()
         request(host)
-        results.append("{} finished at {:.3f}s".format(host, time() - start))
+        total = time() - start
+        results.append({"host": host, "total": total})
     logger.info("Benchmark finished!")
     logger.info("Report:")
-    for res in results:
-        logger.info(f"- {res}")
+    for res in sorted(results, key=lambda r: r["total"]):
+        logger.info("- {} finished at {:.3f}s (avg: {:.3f}s)".format(res["host"], res["total"], res["total"] / COUNT))
 
 
 if __name__ == "__main__":

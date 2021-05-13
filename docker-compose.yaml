@@ -24,8 +24,9 @@ services:
             dockerfile: Dockerfile
         image: benchmark:client
         container_name: client
-        environment: 
-            COUNT: 50
+        environment:
+            LOG_LEVEL: "INFO"
+            COUNT: 100
             HOSTS: "python-rest:8080,pypy-rest:8080"
         depends_on: 
             - python-rest

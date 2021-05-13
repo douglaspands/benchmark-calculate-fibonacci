@@ -1,9 +1,15 @@
-from decouple import config
-import requests
-from time import time, sleep
+import logging
+from time import sleep, time
 
+import requests
+from decouple import config
+
+LOG_LEVEL = config("LOG_LEVEL", default="INFO", cast=str).upper()
 COUNT = config("COUNT", default=1, cast=int)
 HOSTS = config("HOSTS", default="", cast=str).split(",")
+
+logging.basicConfig(level=LOG_LEVEL)
+logger = logging.getLogger("client")
 
 
 def request(host):
@@ -11,18 +17,22 @@ def request(host):
         route = f"http://{host}/fibonacci/v1/sequence/{sequence}"
         start = time()
         res = requests.get(route)
-        print("{:.3f}seg".format(time() - start), f"| {route} |", repr(res.json()))
+        logger.debug("{:.3f}s | {} | {}".format(time() - start, route, repr(res.json())))
 
 
 def main():
-    print("Waited the containers starting...")
+    logger.info("Waiting the containers up...")
     sleep(10)
-    print("Benchmark started...")
+    logger.info("Benchmark started...")
+    results = []
     for host in HOSTS:
         start = time()
         request(host)
-        print("{} finished at {:.3f}seg".format(host, time() - start))
-    print("Benchmark finished!")
+        results.append("{} finished at {:.3f}s".format(host, time() - start))
+    logger.info("Benchmark finished!")
+    logger.info("Report:")
+    for res in results:
+        logger.info(f"- {res}")
 
 
 if __name__ == "__main__":

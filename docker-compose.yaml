@@ -36,6 +36,15 @@ services:
         ports: 
             - 3004:3000
 
+    go-rest:
+        build:
+            context: ./go-rest
+            dockerfile: Dockerfile
+        image: benchmark:go-rest
+        container_name: go-rest
+        ports: 
+            - 3005:3000
+
     client:
         build:
             context: ./client
@@ -44,10 +53,11 @@ services:
         container_name: client
         environment:
             LOG_LEVEL: "INFO"
-            COUNT: 500
-            HOSTS: "python-rest:8080,pypy-rest:8080,node-rest:3000,deno-rest:3000"
+            COUNT: 2000
+            HOSTS: "python-rest:8080,pypy-rest:8080,node-rest:3000,deno-rest:3000,go-rest:3000"
         depends_on: 
             - python-rest
             - pypy-rest
             - node-rest
             - deno-rest
+            - go-rest

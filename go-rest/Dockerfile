@@ -1,11 +1,15 @@
-FROM pypy:3.7-7.3.4-slim-buster
+FROM golang:1.16.4-buster as build
 
 WORKDIR /usr/src/app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY go.mod . 
+RUN go mod download
+COPY main.go ./
+RUN go build
 
-COPY app.py ./
+FROM golang:1.16.4-buster as runner
 
-EXPOSE 8080
-CMD [ "waitress-serve", "--call", "app:create_app" ]
+COPY --from=build /usr/src/app /usr/src/app
+WORKDIR /usr/src/app
+EXPOSE 3000
+CMD ./app

@@ -62,8 +62,8 @@ services:
         container_name: client
         environment:
             LOG_LEVEL: "INFO"
-            COUNT: 2000
-            HOSTS: "python-rest:8080,pypy-rest:8080,node-rest:3000,deno-rest:3000,go-rest:3000"
+            COUNT: 4000
+            HOSTS: "go-rest:3000,python-rest:8080,pypy-rest:8080,node-rest:3000,deno-rest:3000"
         depends_on: 
             - python-rest
             - pypy-rest

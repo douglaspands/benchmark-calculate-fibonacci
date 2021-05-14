@@ -17,7 +17,7 @@ def request(host):
         route = f"http://{host}/fibonacci/v1/sequence/{sequence}"
         start = time()
         res = requests.get(route)
-        logger.debug("{:.3f}s | {} | {}".format(time() - start, route, repr(res.json())))
+        logger.debug("{:.5f}s | {} | {}".format(time() - start, route, repr(res.json())))
 
 
 def main():
@@ -33,7 +33,7 @@ def main():
     logger.info("Benchmark finished!")
     logger.info(f"Report (Count {COUNT}):")
     for res in sorted(results, key=lambda r: r["total"]):
-        logger.info("- {} finished at {:.3f}s (avg: {:.3f}s)".format(res["host"], res["total"], res["total"] / COUNT))
+        logger.info("- {} finished at {:.5f}s (avg: {:.5f}s)".format(res["host"], res["total"], res["total"] / COUNT))
 
 
 if __name__ == "__main__":

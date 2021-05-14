@@ -45,14 +45,14 @@ services:
         ports: 
             - 3005:3000
 
-    # rust-rest:
-    #     build:
-    #         context: ./rust-rest
-    #         dockerfile: Dockerfile
-    #     image: benchmark:rust-rest
-    #     container_name: rust-rest
-    #     ports: 
-    #         - 3006:8080
+    rust-rest:
+        build:
+            context: ./rust-rest
+            dockerfile: Dockerfile
+        image: benchmark:rust-rest
+        container_name: rust-rest
+        ports: 
+            - 3006:8080
 
     client:
         build:

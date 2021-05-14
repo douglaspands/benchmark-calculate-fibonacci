@@ -1,0 +1,7 @@
+[package]
+name = "rust-rest"
+version = "0.1.0"
+authors = ["Douglas"]
+
+[dependencies]
+actix-web = "3"

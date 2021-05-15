@@ -1,8 +1,8 @@
 .gitignore
 .dockerignore
-Dockerfile
-node_modules
-target
-__pycache__
-rustapp
-goapp
+**/Dockerfile
+**/node_modules
+**/target
+**/__pycache__
+**/rustapp
+**/goapp
